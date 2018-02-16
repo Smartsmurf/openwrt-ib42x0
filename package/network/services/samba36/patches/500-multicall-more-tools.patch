@@ -85,7 +85,7 @@
 +
  SMBD_MULTI_O = $(patsubst smbd/server.o,smbd/server_multicall.o,$(SMBD_OBJ))
  NMBD_MULTI_O = $(patsubst nmbd/nmbd.o,nmbd/nmbd_multicall.o,$(filter-out $(LIB_DUMMY_OBJ),$(NMBD_OBJ)))
- SMBPASSWD_MULTI_O = $(patsubst utils/smbpasswd.o,utils/smbpasswd_multicall.o,$(filter-out $(LIB_DUMMY_OBJ),$(SMBPASSWD_OBJ)))
+ SMBPASSWD_MULTI_O = $(patsubst utils/owrt_smbpasswd.o,utils/smbpasswd_multicall.o,$(filter-out $(LIB_DUMMY_OBJ),$(SMBPASSWD_OBJ)))
 +SMBCONTROL_MULTI_O = $(patsubst utils/smbcontrol.o,utils/smbcontrol_multicall.o,$(filter-out $(LIB_DUMMY_OBJ),$(SMBCONTROL_OBJ)))
 +SMBTREE_MULTI_O =  $(patsubst utils/smbtree.o,utils/smbtree_multicall.o,$(filter-out $(LIB_DUMMY_OBJ),$(SMBTREE_OBJ)))
 +SMBSTATUS_MULTI_O =  $(patsubst utils/status.o,utils/status_multicall.o,$(filter-out $(LIB_DUMMY_OBJ),$(STATUS_OBJ)))
@@ -100,4 +100,4 @@
 +		     $(SMBCACLS_MULTI_O) $(NMBLOOKUP_MULTI_O) $(TESTPARM_MULTI_O) $(MULTI_O))
  
  bin/samba_multicall@EXEEXT@: $(BINARY_PREREQS) $(MULTICALL_O) $(LIBTALLOC) $(LIBTDB) $(LIBWBCLIENT) @BUILD_POPT@
- 	@echo Linking $@
+ 	@echo Linking $@ 

@@ -21,7 +21,7 @@ ifneq ($(CONFIG_EGLIBC_VERSION_2_19),)
   GLIBC_PATH:=libc/
   PKG_SOURCE_PROTO:=svn
   PKG_SOURCE:=$(PKG_SOURCE_SUBDIR).tar.bz2
-  PKG_SOURCE_URL:=svn://svn.eglibc.org/branches/eglibc-2_19
+  PKG_SOURCE_URL:=http://www.eglibc.org/svn/branches/eglibc-2_19
 endif
 
 PATCH_DIR:=$(PATH_PREFIX)/patches/$(PKG_VERSION)

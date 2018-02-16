@@ -105,7 +105,7 @@ define Host/Install/Default
 endef
 
 define Host/Install
-  $(call Host/Install/Default)
+  $(call Host/Install/Default, $(STAGING_DIR_HOST))
 endef
 
 
