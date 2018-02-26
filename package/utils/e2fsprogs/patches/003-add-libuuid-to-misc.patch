@@ -1,0 +1,38 @@
+--- a/misc/Makefile.in
++++ b/misc/Makefile.in
+@@ -165,7 +165,7 @@
+ e2initrd_helper: e2initrd_helper.o $(DEPLIBS) $(DEPLIBBLKID) $(LIBEXT2FS)
+ 	$(E) "	LD $@"
+ 	$(Q) $(CC) $(ALL_LDFLAGS) -o e2initrd_helper e2initrd_helper.o $(LIBS) \
+-		$(LIBBLKID) $(LIBEXT2FS) $(LIBINTL) $(SYSLIBS)
++		$(LIBBLKID) $(LIBUUID) $(LIBEXT2FS) $(LIBINTL) $(SYSLIBS)
+ 
+ tune2fs: $(TUNE2FS_OBJS) $(DEPLIBS) $(DEPLIBS_E2P) $(DEPLIBBLKID) \
+ 		$(DEPLIBUUID) $(LIBEXT2FS)
+@@ -208,6 +208,6 @@
+ e2image: $(E2IMAGE_OBJS) $(DEPLIBS) $(DEPLIBBLKID)
+ 	$(E) "	LD $@"
+ 	$(Q) $(CC) $(ALL_LDFLAGS) -o e2image $(E2IMAGE_OBJS) $(LIBS) \
+-		$(LIBINTL) $(SYSLIBS) $(LIBBLKID) $(LIBMAGIC)
++		$(LIBINTL) $(SYSLIBS) $(LIBBLKID) $(LIBUUID) $(LIBMAGIC)
+ 
+ e2image.profiled: $(E2IMAGE_OBJS) $(PROFILED_DEPLIBS) $(DEPLIBBLKID)
+@@ -318,7 +318,7 @@
+ dumpe2fs: $(DUMPE2FS_OBJS) $(DEPLIBS) $(DEPLIBS_E2P) $(DEPLIBUUID) $(DEPLIBBLKID)
+ 	$(E) "	LD $@"
+ 	$(Q) $(CC) $(ALL_LDFLAGS) -o dumpe2fs $(DUMPE2FS_OBJS) $(LIBS) \
+-		$(LIBS_E2P) $(LIBUUID) $(LIBINTL) $(SYSLIBS) $(LIBBLKID) \
++		$(LIBS_E2P) $(LIBINTL) $(SYSLIBS) $(LIBBLKID) $(LIBUUID) \
+ 		$(LIBMAGIC)
+ 
+ dumpe2fs.profiled: $(DUMPE2FS_OBJS) $(PROFILED_DEPLIBS) \
+@@ -332,7 +332,7 @@
+ fsck: $(FSCK_OBJS) $(DEPLIBBLKID)
+ 	$(E) "	LD $@"
+ 	$(Q) $(CC) $(ALL_LDFLAGS) -o fsck $(FSCK_OBJS) $(LIBBLKID) \
+-		$(LIBINTL) $(SYSLIBS)
++		$(LIBUUID) $(LIBINTL) $(SYSLIBS)
+ 
+ fsck.profiled: $(FSCK_OBJS) $(PROFILED_DEPLIBBLKID)
+ 	$(E) "	LD $@"
+

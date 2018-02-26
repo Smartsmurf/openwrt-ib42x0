@@ -71,7 +71,7 @@ endef
 
 define Package/libubus-lua/install
 	$(INSTALL_DIR) $(1)/usr/lib/lua
-	$(CP) $(PKG_BUILD_DIR)/lua/ubus.so $(1)/usr/lib/lua/
+#	$(CP) $(PKG_BUILD_DIR)/lua/ubus.so $(1)/usr/lib/lua/
 endef
 
 $(eval $(call BuildPackage,libubus))
