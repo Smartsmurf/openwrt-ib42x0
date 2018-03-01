@@ -205,6 +205,10 @@ config KERNEL_RELAY
 config KERNEL_KEXEC
 	bool "Enable kexec support"
 
+config KERNEL_USE_OF
+	bool "Enable Open Firmware support"
+	select KERNEL_OF
+
 config USE_RFKILL
 	bool "Enable rfkill support"
 	default RFKILL_SUPPORT

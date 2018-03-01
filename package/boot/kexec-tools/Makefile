@@ -7,6 +7,7 @@
 
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
+include $(INCLUDE_DIR)/image.mk
 
 PKG_NAME:=kexec-tools
 PKG_VERSION:=2.0.9
@@ -84,6 +85,7 @@ define Package/kexec-tools/install
 		$(PKG_INSTALL_DIR)/usr/sbin/kexec \
 		$(1)/usr/sbin
 
+	$(CP) $(LINUX_DIR)/arch/$(LINUX_KARCH)/boot/dts/*.dtb $(BIN_DIR)/
 # make a link for compatability with other distros
 	$(INSTALL_DIR) $(1)/sbin
 	$(LN) ../usr/sbin/kexec $(1)/sbin/kexec
