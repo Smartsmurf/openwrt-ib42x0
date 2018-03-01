@@ -1,0 +1,11 @@
+--- a/arch/arm/boot/dts/Makefile	2013-01-18 19:59:57.130244026 +0100
++++ b/arch/arm/boot/dts/Makefile	2013-01-18 20:01:46.729852976 +0100
+@@ -517,6 +517,7 @@
+ 	dove-dove-db.dtb
+ dtb-$(CONFIG_ARCH_MEDIATEK) += mt6589-aquaris5.dtb
++dtb-$(CONFIG_MACH_NAS4220B) += gemini-nas4220b.dtb
+ 
+ targets += dtbs dtbs_install
+ targets += $(dtb-y)
+ endif
+

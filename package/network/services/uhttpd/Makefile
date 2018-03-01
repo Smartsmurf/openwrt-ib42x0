@@ -8,13 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=uhttpd
-PKG_VERSION:=2015-03-30
+PKG_VERSION:=2017-11-04
 PKG_RELEASE=$(PKG_SOURCE_VERSION)
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=git://nbd.name/uhttpd2.git
+PKG_SOURCE_URL:=git://git.openwrt.org/project/uhttpd.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=b9178b9357798ae23a5724333cc6572d14f23958
+PKG_SOURCE_VERSION:=a235636a2687fafb9c474e4b134a59ff66425c92
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Felix Fietkau <nbd@openwrt.org>
 PKG_LICENSE:=ISC
@@ -33,7 +33,7 @@ endef
 
 define Package/uhttpd
   $(Package/uhttpd/default)
-  DEPENDS:=+libubox
+  DEPENDS:=+libubox +libblobmsg-json +libjson-script
 endef
 
 define Package/uhttpd/description
@@ -43,40 +43,10 @@ define Package/uhttpd/description
 endef
 
 define Package/uhttpd/config
-  config PACKAGE_uhttpd_debug
-    bool "Build with debug messages"
-    default n
-endef
-
-
-define Package/uhttpd-mod-tls
-  $(Package/uhttpd/default)
-  TITLE+= (TLS plugin)
-  DEPENDS:=uhttpd \
-	+PACKAGE_uhttpd-mod-tls_polarssl:libustream-polarssl \
-	+PACKAGE_uhttpd-mod-tls_cyassl:libustream-cyassl \
-	+PACKAGE_uhttpd-mod-tls_openssl:libustream-openssl
-endef
-
-define Package/uhttpd-mod-tls/description
- The TLS plugin adds HTTPS support to uHTTPd.
-endef
-
-define Package/uhttpd-mod-tls/config
-  choice
-    depends on PACKAGE_uhttpd-mod-tls
-    prompt "TLS Provider"
-    default PACKAGE_uhttpd-mod-tls_polarssl
-
-    config PACKAGE_uhttpd-mod-tls_polarssl
-      bool "PolarSSL"
-
-    config PACKAGE_uhttpd-mod-tls_cyassl
-      bool "CyaSSL"
-
-    config PACKAGE_uhttpd-mod-tls_openssl
-      bool "OpenSSL"
-  endchoice
+  config uhttpd_lua
+    depends on PACKAGE_uhttpd-mod-lua
+    bool "Enable Integrated Lua interpreter"
+	default y
 endef
 
 define Package/uhttpd-mod-lua
@@ -124,10 +94,6 @@ define Package/uhttpd/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/uhttpd $(1)/usr/sbin/uhttpd
 endef
 
-define Package/uhttpd-mod-tls/install
-	true
-endef
-
 define Package/uhttpd-mod-lua/install
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/uhttpd_lua.so $(1)/usr/lib/
@@ -139,8 +105,16 @@ define Package/uhttpd-mod-ubus/install
 	$(INSTALL_DATA) ./files/ubus.default $(1)/etc/uci-defaults/00_uhttpd_ubus
 endef
 
+define Package/uhttpd-mod-lua/postinst
+	$(if $(CONFIG_uhttpd_lua),
+	#!/bin/sh
+	if [ -f $${IPKG_INSTROOT}/www/index.html ]
+	then
+		sed -e 's:/cgi-bin::g' -i $${IPKG_INSTROOT}/www/index.html
+	fi
+	,)
+endef
 
 $(eval $(call BuildPackage,uhttpd))
-$(eval $(call BuildPackage,uhttpd-mod-tls))
 $(eval $(call BuildPackage,uhttpd-mod-lua))
 $(eval $(call BuildPackage,uhttpd-mod-ubus))

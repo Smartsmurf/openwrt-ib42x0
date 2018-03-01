@@ -6,6 +6,7 @@
 #
 
 include $(TOPDIR)/rules.mk
+include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=kexec-tools
 PKG_VERSION:=2.0.9
@@ -68,6 +69,10 @@ kexec-extra-sbin-$(CONFIG_KEXEC_TOOLS_kdump) += kdump
 
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) DESTDIR="$(PKG_INSTALL_DIR)" all install
+	$(MAKE) -C "$(LINUX_DIR)" \
+		ARCH="$(LINUX_KARCH)" \
+		CROSS_COMPILE="$(TARGET_CROSS)" \
+		dtbs
 endef
 
 define Package/kexec-tools/install

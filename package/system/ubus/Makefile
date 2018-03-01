@@ -1,13 +1,15 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ubus
-PKG_VERSION:=2015-01-22
+#PKG_VERSION:=2015-01-22
+PKG_VERSION:=2018-01-16
 PKG_RELEASE=$(PKG_SOURCE_VERSION)
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/mkschreder/openwrt-ubus
+PKG_SOURCE_URL:=https://git.openwrt.org/project/ubus.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=dcf717dc43232ddacc42889c3348f13d692b5d40
+#PKG_SOURCE_VERSION:=dcf717dc43232ddacc42889c3348f13d692b5d40
+PKG_SOURCE_VERSION:=5bae22eb5472c9c7cc30caa9a84004bba19940d3
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MIRROR_MD5SUM:=
 CMAKE_INSTALL:=1
@@ -71,7 +73,7 @@ endef
 
 define Package/libubus-lua/install
 	$(INSTALL_DIR) $(1)/usr/lib/lua
-#	$(CP) $(PKG_BUILD_DIR)/lua/ubus.so $(1)/usr/lib/lua/
+	$(CP) $(PKG_BUILD_DIR)/lua/ubus.so $(1)/usr/lib/lua/
 endef
 
 $(eval $(call BuildPackage,libubus))
